@@ -92,7 +92,7 @@ export async function generateStructured<T>(args: {
     instructions: args.instructions,
     prompt: args.prompt,
     output: Output.object({ schema: args.schema }),
-    abortSignal: args.abortSignal,
+    ...(args.abortSignal ? { abortSignal: args.abortSignal } : {}),
     onError: ({ error }) => {
       streamError = error;
     },

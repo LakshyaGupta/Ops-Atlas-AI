@@ -66,7 +66,7 @@ export function RunView({ data }: { data: RunData }) {
             <ul className="divide-y divide-border">
               {answer.claims.map((c, i) => (
                 <li key={i} className="flex flex-wrap items-start gap-3 px-5 py-3 text-sm">
-                  <span className={`shrink-0 rounded px-2 py-0.5 text-xs ${CLAIM_STYLE[c.type] ?? CLAIM_STYLE.unknown}`}>{CLAIM_LABEL[c.type] ?? c.type}</span>
+                  <span className={`shrink-0 rounded px-2 py-0.5 text-xs ${CLAIM_STYLE[c.type] ?? CLAIM_STYLE["unknown"]}`}>{CLAIM_LABEL[c.type] ?? c.type}</span>
                   <span className="min-w-0 flex-1">{c.text}</span>
                   <span className="flex gap-1">{c.source_ids.map((n) => <CiteBtn key={n} n={n} onClick={() => setActive(n)} />)}</span>
                 </li>

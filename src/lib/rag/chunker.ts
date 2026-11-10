@@ -62,7 +62,9 @@ export function chunkPages(
           push(page, section, buf);
           const tail = buf.slice(-overlap);
           const cut = tail.indexOf(" ");
-          buf = (cut >= 0 ? tail.slice(cut + 1) : tail) + "\n\n" + piece;
+          const carried = cut >= 0 ? tail.slice(cut + 1) : tail;
+          // Only carry overlap when it still fits within the target size.
+          buf = carried.length + piece.length + 2 <= target ? carried + "\n\n" + piece : piece;
         } else {
           buf = buf ? buf + "\n\n" + piece : piece;
         }
