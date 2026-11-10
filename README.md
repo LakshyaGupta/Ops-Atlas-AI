@@ -5,7 +5,7 @@ reference documents, then ask questions and get answers that cite the exact
 passage they came from. Answers that aren't supported by your documents are
 refused instead of invented.
 
-Live app: https://pixel-perfect-replay-89099.lovable.app
+Live app: https://opsatlas-lyart.vercel.app/
 
 ## What it does today
 
