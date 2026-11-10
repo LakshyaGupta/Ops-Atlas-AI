@@ -162,17 +162,28 @@ function Markdown({ text, onCite, known }: { text: string; onCite: (n: number) =
       if (c && known.has(Number(c[1]))) return <Fragment key={i}> <CiteBtn n={Number(c[1])} onClick={() => onCite(Number(c[1]))} /></Fragment>;
       return <Fragment key={i}>{p}</Fragment>;
     });
-  const blocks = text.split(/\n{2,}/);
+  type Block = { kind: "h" | "p" | "ul" | "ol"; lines: string[] };
+  const blocks: Block[] = [];
+  for (const raw of text.split("\n")) {
+    const line = raw.trimEnd();
+    const last = blocks[blocks.length - 1];
+    if (!line.trim()) { blocks.push({ kind: "p", lines: [] }); continue; }
+    const h = line.match(/^#{1,4}\s+(.+)$/);
+    if (h) { blocks.push({ kind: "h", lines: [h[1]!] }); continue; }
+    const ul = line.match(/^\s*[-*]\s+(.+)$/);
+    const ol = line.match(/^\s*\d+\.\s+(.+)$/);
+    const kind = ul ? "ul" : ol ? "ol" : "p";
+    const content = ul?.[1] ?? ol?.[1] ?? line;
+    if (last && last.kind === kind && (kind !== "p" || last.lines.length)) last.lines.push(content);
+    else blocks.push({ kind, lines: [content] });
+  }
   return (
     <div className="space-y-3 text-[15px] leading-relaxed">
-      {blocks.map((blk, i) => {
-        const lines = blk.split("\n");
-        if (lines.every((l) => /^\s*([-*]|\d+\.)\s+/.test(l))) {
-          return <ul key={i} className="list-disc space-y-1 pl-5">{lines.map((l, j) => <li key={j}>{inline(l.replace(/^\s*([-*]|\d+\.)\s+/, ""))}</li>)}</ul>;
-        }
-        const h = blk.match(/^#{1,4}\s+(.+)$/);
-        if (h) return <h3 key={i} className="pt-2 font-semibold">{inline(h[1]!)}</h3>;
-        return <p key={i}>{lines.map((l, j) => <Fragment key={j}>{j > 0 && <br />}{inline(l)}</Fragment>)}</p>;
+      {blocks.filter((b) => b.lines.length).map((b, i) => {
+        if (b.kind === "h") return <h3 key={i} className="pt-2 font-semibold">{inline(b.lines[0]!)}</h3>;
+        if (b.kind === "ul") return <ul key={i} className="list-disc space-y-1.5 pl-5">{b.lines.map((l, j) => <li key={j}>{inline(l)}</li>)}</ul>;
+        if (b.kind === "ol") return <ol key={i} className="list-decimal space-y-1.5 pl-5">{b.lines.map((l, j) => <li key={j}>{inline(l)}</li>)}</ol>;
+        return <p key={i}>{b.lines.map((l, j) => <Fragment key={j}>{j > 0 && <br />}{inline(l)}</Fragment>)}</p>;
       })}
     </div>
   );

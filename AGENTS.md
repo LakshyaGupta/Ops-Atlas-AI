@@ -28,3 +28,10 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project architecture (OpsAtlas AI)
+- Server functions live in `src/lib/api/*.functions.ts`; server-only helpers in `*.server.ts`. Never use a `src/server/` folder — client import protection denies it.
+- All workspace data access uses the caller's RLS client (`requireSupabaseAuth`); isolation is enforced by `is_workspace_member` / `can_write_workspace` policies, not app code.
+- Retrieval goes through the `hybrid_search` SQL function (pgvector halfvec HNSW + full-text, RRF); embedding column dims must match the embedding model.
+- Citations must reference retrieved chunk ids only; `src/lib/rag/citations.ts` is the single verifier and is unit tested.
+- Documents become `ready` only after chunks are stored; deleting a document cascades to its chunks.
