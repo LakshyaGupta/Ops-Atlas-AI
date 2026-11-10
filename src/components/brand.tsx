@@ -2,10 +2,32 @@ import { Link } from "@tanstack/react-router";
 
 export function BrandMark({ className = "h-7 w-7" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 32 32" className={className} aria-hidden="true">
-      <rect x="1" y="1" width="30" height="30" rx="8" className="fill-surface-raised stroke-border" />
-      <path d="M8 22 L16 8 L24 22" className="stroke-primary" strokeWidth="2.4" fill="none" strokeLinejoin="round" />
-      <circle cx="16" cy="18" r="2.4" className="fill-primary" />
+    <svg viewBox="0 0 64 64" className={className} aria-hidden="true">
+      <defs>
+        <clipPath id="brand-mark-cut">
+          <rect x="0" y="0" width="64" height="52.82" />
+        </clipPath>
+      </defs>
+      <rect
+        x="1"
+        y="1"
+        width="62"
+        height="62"
+        rx="14"
+        className="fill-surface-raised stroke-border"
+        strokeWidth="1.5"
+      />
+      <g clipPath="url(#brand-mark-cut)">
+        <path
+          d="M8.52 56.35 L31.87 14.38 L55.63 56.35"
+          className="stroke-primary"
+          strokeWidth="6.03"
+          fill="none"
+          strokeLinejoin="round"
+          strokeLinecap="butt"
+        />
+        <circle cx="31.94" cy="41.81" r="6.44" className="fill-primary" />
+      </g>
     </svg>
   );
 }
