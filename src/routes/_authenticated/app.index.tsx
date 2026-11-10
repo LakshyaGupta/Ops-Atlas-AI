@@ -2,8 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { ArrowRight } from "lucide-react";
-import { listDocuments } from "@/server/documents.functions";
-import { listRuns } from "@/server/agent.functions";
+import { listDocuments } from "@/lib/api/documents.functions";
+import { listRuns } from "@/lib/api/agent.functions";
 import { PageHeader, StatusPill } from "@/components/page-header";
 import { Button } from "@/components/ui/button";
 

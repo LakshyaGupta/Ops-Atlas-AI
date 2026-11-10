@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { Upload, Trash2, RefreshCw, Database, FileText } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { deleteDocument, listDocuments, loadDemoDocuments, markUploadFailed, processDocument, registerDocument } from "@/server/documents.functions";
+import { deleteDocument, listDocuments, loadDemoDocuments, markUploadFailed, processDocument, registerDocument } from "@/lib/api/documents.functions";
 import { useWorkspace } from "@/hooks/use-workspace";
 import { PageHeader, StatusPill } from "@/components/page-header";
 import { Button } from "@/components/ui/button";
