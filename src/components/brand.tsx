@@ -1,10 +1,12 @@
 import { Link } from "@tanstack/react-router";
+import { useId } from "react";
 
 export function BrandMark({ className = "h-7 w-7" }: { className?: string }) {
+  const clipId = useId();
   return (
     <svg viewBox="0 0 64 64" className={className} aria-hidden="true">
       <defs>
-        <clipPath id="brand-mark-cut">
+        <clipPath id={clipId}>
           <rect x="0" y="0" width="64" height="52.82" />
         </clipPath>
       </defs>
@@ -17,7 +19,7 @@ export function BrandMark({ className = "h-7 w-7" }: { className?: string }) {
         className="fill-surface-raised stroke-border"
         strokeWidth="1.5"
       />
-      <g clipPath="url(#brand-mark-cut)">
+      <g clipPath={`url(#${clipId})`}>
         <path
           d="M8.52 56.35 L31.87 14.38 L55.63 56.35"
           className="stroke-primary"
