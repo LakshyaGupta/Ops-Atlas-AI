@@ -7,8 +7,6 @@ refused instead of invented.
 
 Live app: https://pixel-perfect-replay-89099.lovable.app
 
-Portfolio: https://laksh-gupta.vercel.app/
-
 ## What it does today
 
 - **Sign in** with email or Google. Every account gets its own private workspace;
